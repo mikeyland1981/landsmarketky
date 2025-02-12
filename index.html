@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Land's Market Laser Engraving</title>
-    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>  <style>
         body {
-            font-family: sans-serif;
+            font-family: 'Arial', sans-serif; /* Modern font */
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4; /* Light gray background */
-            color: #333; /* Dark gray text */
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column; /* Arrange content vertically */
+            min-height: 100vh; /* Ensure footer sticks to bottom */
         }
         header {
-            background-color: #333; /* Dark gray header */
-            color: #fff; /* White text */
+            background-color: #333;
+            color: #fff;
             padding: 20px;
             text-align: center;
+            animation: fadeInDown 1s; /* Animate header */
         }
         h1 {
             margin-bottom: 10px;
@@ -24,9 +28,10 @@
         section {
             padding: 20px;
             margin: 20px;
-            background-color: #fff; /* White section background */
-            border-radius: 5px; /* Rounded corners for sections */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s; /* Animate sections */
         }
         .social-links {
             text-align: center;
@@ -37,37 +42,52 @@
             margin: 0 10px;
         }
         .social-links img {
-            width: 30px;
-            height: 30px;
+            width: 40px; /* Larger icons */
+            height: 40px;
+            transition: transform 0.3s ease; /* Smooth hover effect */
         }
-
+        .social-links img:hover {
+            transform: scale(1.1); /* Slightly enlarge on hover */
+        }
         .contact-form label, .contact-form input, .contact-form textarea {
-            display: block; /* Make form elements stack vertically */
-            width: calc(100% - 12px); /* Full width with padding adjustment */
+            display: block;
+            width: calc(100% - 12px);
             margin-bottom: 10px;
-            padding: 5px;
-            box-sizing: border-box; /* Include padding in width calculation */
+            padding: 8px; /* Slightly larger padding */
+            box-sizing: border-box;
+            border: 1px solid #ccc; /* Add border to form elements */
+            border-radius: 5px;
         }
-
         .contact-form textarea {
-          height: 120px;
+            height: 120px;
+            resize: vertical; /* Allow vertical resizing of textarea */
         }
-
         .contact-form button {
-          background-color: #333;
-          color: white;
-          padding: 10px 15px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+        }
+        .contact-form button:hover {
+            background-color: #555; /* Darker background on hover */
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            margin-top: auto; /* Push footer to bottom */
         }
 
-        footer {
-          text-align: center;
-          padding: 10px;
-          background-color: #333;
-          color: white;
+        /* Add some hover effects to the sections */
+        section:hover {
+          transform: translateY(-5px); /* Move section up slightly */
+          transition: transform 0.3s ease; /* Smooth transition */
         }
+
 
     </style>
 </head>
@@ -80,28 +100,28 @@
 
     <section>
         <h2>Welcome!</h2>
-        <p>We offer a wide range of laser engraving services, from personalized gifts to custom signage.  Contact us today to discuss your project!</p>
-    </section>
+        <p>We offer a wide range of laser engraving services, from personalized gifts to custom signage. Contact us today to discuss your project!</p>
+        <img src="laser_engraving_example.jpg" alt="Example of Laser Engraving" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">  </section>
 
     <section class="contact-form">
-      <h2>Contact Us</h2>
-      <form action="mailto:landsmarketky@gmail.com" method="post" enctype="text/plain">  <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <h2>Contact Us</h2>
+        <form action="mailto:landsmarketky@gmail.com" method="post" enctype="text/plain">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
 
-        <button type="submit">Send</button>
-      </form>
+            <button type="submit">Send</button>
+        </form>
     </section>
 
-
     <section class="social-links">
-        <a href="https://www.facebook.com/LandsMarketLLC" target="_blank">  <img src="facebook.png" alt="Facebook">  </a>
-        <a href="https://www.instagram.com/landsmarketky" target="_blank">  <img src="instagram.png" alt="Instagram">  </a>
+        <a href="https://www.facebook.com/LandsMarketLLC" target="_blank"> <img src="facebook.png" alt="Facebook"> </a>
+        <a href="https://www.instagram.com/landsmarketky" target="_blank"> <img src="instagram.png" alt="Instagram"> </a>
     </section>
 
     <footer>

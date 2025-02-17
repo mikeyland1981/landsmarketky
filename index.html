@@ -7,95 +7,113 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         body {
-            font-family: 'Arial', sans-serif; 
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
             display: flex;
-            flex-direction: column; 
-            min-height: 100vh; 
+            flex-direction: column;
+            min-height: 100vh;
         }
+
         header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
+            background-color: transparent;
+            padding: 0;
             text-align: center;
-            animation: fadeInDown 1s; 
+            animation: fadeInDown 1s;
         }
-        h1 {
-            margin-bottom: 10px;
+
+        header img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
         }
+
+        h1, p {
+            display: none;
+        }
+
         section {
             padding: 20px;
             margin: 20px;
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            animation: fadeInUp 1s; 
+            animation: fadeInUp 1s;
         }
-      .social-links {
+
+        .social-links {
             text-align: center;
             margin-top: 20px;
         }
-      .social-links a {
+
+        .social-links a {
             display: inline-block;
             margin: 0 10px;
         }
-      .social-links img {
-            width: 40px; 
+
+        .social-links img {
+            width: 40px;
             height: 40px;
-            transition: transform 0.3s ease; 
+            transition: transform 0.3s ease;
         }
-      .social-links img:hover {
-            transform: scale(1.1); 
+
+        .social-links img:hover {
+            transform: scale(1.1);
         }
-      .contact-form label,.contact-form input,.contact-form textarea {
+
+        .contact-form label, .contact-form input, .contact-form textarea {
             display: block;
             width: calc(100% - 12px);
             margin-bottom: 10px;
-            padding: 8px; 
+            padding: 8px;
             box-sizing: border-box;
-            border: 1px solid #ccc; 
+            border: 1px solid #ccc;
             border-radius: 5px;
         }
-      .contact-form textarea {
+
+        .contact-form textarea {
             height: 120px;
-            resize: vertical; 
+            resize: vertical;
         }
-      .contact-form button {
+
+        .contact-form button {
             background-color: #333;
             color: white;
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease; 
+            transition: background-color 0.3s ease;
         }
-      .contact-form button:hover {
-            background-color: #555; 
+
+        .contact-form button:hover {
+            background-color: #555;
         }
+
         footer {
             text-align: center;
             padding: 10px;
             background-color: #333;
             color: white;
-            margin-top: auto; 
+            margin-top: auto;
         }
 
         section:hover {
-            transform: translateY(-5px); 
-            transition: transform 0.3s ease; 
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
         }
 
-        /* Styles for the image slider */
         #image-slider {
-            width: 500px; /* Adjust width as needed */
-            height: 300px; /* Adjust height as needed */
+            width: 500px;
+            height: 300px;
             overflow: hidden;
             margin: 20px auto;
             position: relative;
         }
+
         #image-slider img {
             width: 100%;
             height: 100%;
@@ -104,6 +122,7 @@
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
+
         #image-slider img.active {
             opacity: 1;
         }
@@ -112,13 +131,13 @@
 <body>
 
     <header>
-        <h1>Land's Market</h1>
-        <p>Custom laser engraving services for all your needs.</p>
+        <img src="LandsMarketLogo.jpg" alt="Land's Market Logo">
     </header>
 
     <section>
         <h2>Welcome!</h2>
         <p>We offer a wide range of laser engraving services, from personalized gifts to custom signage. Contact us today to discuss your project!</p>
+        <img src="laser_engraving_example.jpg" alt="Example of Laser Engraving" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">
     </section>
 
     <section id="image-slider">
@@ -131,7 +150,7 @@
         <img src="pictures/santa_tray2.jpg" alt="Image 3">
     </section>
 
-    <section class="contact-form">
+     <section class="contact-form">
         <h2>Contact Us</h2>
         <form action="mailto:landsmarketky@gmail.com" method="post" enctype="text/plain">
             <label for="name">Name:</label>
@@ -148,11 +167,11 @@
     </section>
 
     <section class="social-links">
-        <a href="https://www.facebook.com/LandsMarketLLC" target="_blank"> 
-            <img src="facebook.png" alt="Facebook"> 
+        <a href="https://www.facebook.com/LandsMarketLLC" target="_blank">
+            <img src="facebook.png" alt="Facebook">
         </a>
-        <a href="https://www.instagram.com/landsmarketky" target="_blank"> 
-            <img src="instagram.png" alt="Instagram"> 
+        <a href="https://www.instagram.com/landsmarketky" target="_blank">
+            <img src="instagram.png" alt="Instagram">
         </a>
     </section>
 

@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land's Market — Laser Engraving & Custom Creations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --warm-cream: #FAF3E8;
+            --deep-walnut: #3B2314;
+            --burnt-sienna: #A0522D;
+            --golden-honey: #C8963E;
+            --soft-leather: #8B6F4E;
+            --parchment: #F0E6D3;
+            --charcoal: #2C2420;
+            --warm-white: #FFFDF9;
+            --rust: #B7572E;
+            --sage: #7A8B6F;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lora', Georgia, serif;
+            background-color: var(--warm-cream);
+            color: var(--deep-walnut);
+            overflow-x: hidden;
+        }
+
+        /* ============ GRAIN OVERLAY ============ */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px;
+        }
+
+        /* ============ NAV ============ */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(59, 35, 20, 0.95);
+            box-shadow: 0 2px 30px rgba(59, 35, 20, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--warm-cream);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            color: var(--warm-cream);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--golden-honey);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--golden-honey);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--warm-cream);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(160deg, var(--deep-walnut) 0%, #5C3A24 40%, var(--burnt-sienna) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(200, 150, 62, 0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 30%, rgba(160, 82, 45, 0.2) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            animation: heroFadeIn 1.2s ease-out;
+        }
+
+        .hero-logo {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(200, 150, 62, 0.4);
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--warm-cream);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-tagline {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: var(--golden-honey);
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-veteran {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: rgba(250, 243, 232, 0.7);
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 2.8rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--warm-cream);
+            border: 1.5px solid var(--golden-honey);
+            text-decoration: none;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--golden-honey);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .hero-cta:hover::before {
+            left: 0;
+        }
+
+        .hero-cta:hover {
+            color: var(--deep-walnut);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            stroke: rgba(250, 243, 232, 0.5);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-8px); }
+            60% { transform: translateX(-50%) translateY(-4px); }
+        }
+
+        @keyframes heroFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============ SECTIONS ============ */
+        .section-padding {
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--burnt-sienna);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--deep-walnut);
+            font-weight: 700;
+        }
+
+        .section-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--golden-honey);
+            margin: 1.5rem auto 0;
+        }
+
+        /* ============ ABOUT ============ */
+        .about {
+            background: var(--warm-white);
+        }
+
+        .about-text {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--soft-leather);
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .highlight-item {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .highlight-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .highlight-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--deep-walnut);
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-desc {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            color: var(--soft-leather);
+            line-height: 1.6;
+        }
+
+        /* ============ GALLERY ============ */
+        .gallery {
+            background: var(--parchment);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(59, 35, 20, 0.6) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .gallery-item .gallery-caption {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            color: var(--warm-cream);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-item:nth-child(2) {
+            grid-row: span 2;
+        }
+
+        .gallery-item:nth-child(2) {
+            aspect-ratio: auto;
+        }
+
+        /* ============ SERVICES ============ */
+        .services {
+            background: var(--deep-walnut);
+            color: var(--warm-cream);
+            position: relative;
+        }
+
+        .services .section-label {
+            color: var(--golden-honey);
+        }
+
+        .services .section-title {
+            color: var(--warm-cream);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 2.5rem;
+            border: 1px solid rgba(200, 150, 62, 0.2);
+            border-radius: 4px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 0;
+            background: var(--golden-honey);
+            transition: height 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            height: 100%;
+        }
+
+        .service-card:hover {
+            border-color: rgba(200, 150, 62, 0.5);
+            transform: translateY(-4px);
+        }
+
+        .service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--golden-honey);
+        }
+
+        .service-card p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: rgba(250, 243, 232, 0.75);
+        }
+
+        /* ============ CONTACT ============ */
+        .contact {
+            background: var(--warm-white);
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--deep-walnut);
+        }
+
+        .contact-info p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--soft-leather);
+            margin-bottom: 2rem;
+        }
+
+        .social-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .social-row a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--parchment);
+            transition: all 0.3s ease;
+        }
+
+        .social-row a:hover {
+            background: var(--golden-honey);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(200, 150, 62, 0.3);
+        }
+
+        .social-row img {
+            width: 22px;
+            height: 22px;
+        }
+
+        .contact-form-card {
+            background: var(--warm-cream);
+            padding: 2.5rem;
+            border-radius: 6px;
+            border: 1px solid rgba(139, 111, 78, 0.15);
+            box-shadow: 0 8px 40px rgba(59, 35, 20, 0.06);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--soft-leather);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            font-family: 'Lora', serif;
+            font-size: 0.95rem;
+            border: 1px solid rgba(139, 111, 78, 0.25);
+            border-radius: 3px;
+            background: var(--warm-white);
+            color: var(--deep-walnut);
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--golden-honey);
+        }
+
+        .form-group textarea {
+            height: 140px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            background: var(--deep-walnut);
+            color: var(--warm-cream);
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--burnt-sienna);
+            box-shadow: 0 6px 25px rgba(160, 82, 45, 0.3);
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background: var(--charcoal);
+            color: rgba(250, 243, 232, 0.6);
+            text-align: center;
+            padding: 2.5rem 2rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        footer span {
+            color: var(--golden-honey);
+        }
+
+        /* ============ SCROLL ANIMATIONS ============ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============ LIGHTBOX ============ */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(44, 36, 32, 0.95);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 85vw;
+            max-height: 85vh;
+            border-radius: 4px;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+            animation: lbIn 0.3s ease;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(250, 243, 232, 0.4);
+            border-radius: 50%;
+            background: none;
+            color: var(--warm-cream);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(250, 243, 232, 0.1);
+        }
+
+        @keyframes lbIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(59, 35, 20, 0.97);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .about-highlights {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .gallery-item:nth-child(2) {
+                grid-row: span 1;
+                aspect-ratio: 1;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .section-padding {
+                padding: 4rem 1.25rem;
+            }
+
+            .hero-logo {
+                width: 160px;
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <a href="#" class="nav-brand">Land's Market</a>
+        <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="LandsMarketLogo.jpg" alt="Land's Market Logo" class="hero-logo">
+            <div class="hero-tagline">Laser Engraving &amp; Custom Creations</div>
+            <h1>Land's Market</h1>
+            <p class="hero-veteran">Veteran Owned &amp; Operated &mdash; Lexington, KY</p>
+            <a href="#contact" class="hero-cta">Start Your Custom Order</a>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about section-padding" id="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Our Story</span>
+                <h2 class="section-title">Crafted with Care</h2>
+                <div class="section-divider"></div>
+            </div>
+            <p class="about-text reveal">
+                At Land's Market, every piece tells a story. We specialize in precision laser engraving 
+                and custom creations — from personalized gifts and home&nbsp;décor to unique signage and 
+                one&#8209;of&#8209;a&#8209;kind jewelry. As a proud veteran-owned small business based in Kentucky, 
+                we bring the same dedication and attention to detail to every project that walks through our door.
+            </p>
+            <div class="about-highlights reveal">
+                <div class="highlight-item">
+                    <span class="highlight-icon">&#9733;</span>
+                    <div class="highlight-title">Custom Designs</div>
+                    <p class="highlight-desc">Your vision, brought to life with precision laser technology.</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="highlight-icon">&#9829;</span>
+                    <div class="highlight-title">Handcrafted Quality</div>
+                    <p class="highlight-desc">Every piece is finished by hand with care and attention.</p>
+                </div>
+                <div class="highlight-item">
+                    <span class="highlight-icon">&#9873;</span>
+                    <div class="highlight-title">Veteran Owned</div>
+                    <p class="highlight-desc">Built on values of integrity, hard work, and service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery section-padding" id="gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Our Work</span>
+                <h2 class="section-title">Recent Creations</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="gallery-grid reveal">
+                <div class="gallery-item" onclick="openLightbox(this)">
+                    <img src="pictures/coasters.jpg" alt="Custom engraved coasters" loading="lazy">
+                    <span class="gallery-caption">Engraved Coasters</span>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                    <img src="pictures/lamp.jpg" alt="Laser cut ornament" loading="lazy">
+                    <span class="gallery-caption">Laser-Cut Ornaments</span>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                    <img src="pictures/caosters2.jpg" alt="Slate and wood coasters" loading="lazy">
+                    <span class="gallery-caption">Slate &amp; Wood Coasters</span>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                    <img src="pictures/santa_tray1.jpg" alt="Santa treat tray" loading="lazy">
+                    <span class="gallery-caption">Custom Santa Tray</span>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                    <img src="pictures/fudge.jpg" alt="Custom engraved gift" loading="lazy">
+                    <span class="gallery-caption">Personalized Gift</span>
+                </div>
+                <div class="gallery-item" onclick="openLightbox(this)">
+                    <img src="pictures/santa_tray2.jpg" alt="Holiday serving tray" loading="lazy">
+                    <span class="gallery-caption">Holiday Serving Tray</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services section-padding" id="services">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">What We Do</span>
+                <h2 class="section-title">Our Services</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="services-grid reveal">
+                <div class="service-card">
+                    <h3>Custom Engraving</h3>
+                    <p>Wood, slate, acrylic, leather, and more — we engrave your designs, logos, or text onto a wide range of materials with stunning precision.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Personalized Gifts</h3>
+                    <p>Coasters, cutting boards, ornaments, and keepsakes — create a meaningful, one-of-a-kind gift for any occasion.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Custom Signage</h3>
+                    <p>From business signs to home décor, we design and engrave custom signs that make a lasting impression.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Custom Jewelry</h3>
+                    <p>Handcrafted and laser-engraved jewelry pieces designed to be as unique as the person wearing them.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact section-padding" id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Get in Touch</span>
+                <h2 class="section-title">Let's Create Something</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="contact-wrapper reveal">
+                <div class="contact-info">
+                    <h3>Have an idea? We'd love to hear it.</h3>
+                    <p>
+                        Whether you have a detailed design in mind or just a spark of inspiration, 
+                        reach out and let's talk. We'll work with you to bring your vision to life — 
+                        no project is too big or too small.
+                    </p>
+                    <div style="margin-bottom:1.5rem;">
+                        <p style="font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--burnt-sienna);margin-bottom:0.3rem;">
+                            <strong>Email</strong>
+                        </p>
+                        <p style="margin-bottom:0;">landsmarketky@gmail.com</p>
+                    </div>
+                    <p style="font-family:'DM Sans',sans-serif;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--soft-leather);margin-bottom:0.75rem;">
+                        Follow Us
+                    </p>
+                    <div class="social-row">
+                        <a href="https://www.facebook.com/LandsMarketLLC" target="_blank" aria-label="Facebook">
+                            <img src="facebook.png" alt="Facebook">
+                        </a>
+                        <a href="https://www.instagram.com/landsmarketky" target="_blank" aria-label="Instagram">
+                            <img src="instagram.png" alt="Instagram">
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form-card">
+                    <form action="mailto:landsmarketky@gmail.com" method="post" enctype="text/plain">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="Your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required placeholder="Tell us about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        &copy; 2025 <span>Land's Market</span> &mdash; Veteran Owned &amp; Operated &mdash; Lexington, KY
+    </footer>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" aria-label="Close">&times;</button>
+        <img id="lightbox-img" src="" alt="Gallery image">
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        reveals.forEach(el => observer.observe(el));
+
+        // Lightbox
+        function openLightbox(el) {
+            const img = el.querySelector('img');
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Close mobile nav on link click
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('open');
+            });
+        });
+    </script>
+
+</body>
+</html>
